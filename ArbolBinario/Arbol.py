@@ -1,8 +1,8 @@
 """
 Title: Implementar el ADT Arboles Binarios
 Autor: Axel Jes Aguilar Ribera
-Date: 03/04/25
-Version: v1.0
+Date: 08/04/25
+Version: v2.0
 """
 """
 creacion de clase ArbolBinario
@@ -87,5 +87,34 @@ class ArbolBinarioBusqueda:
         """Devuelve la cantidad total de nodos en el ABB."""
         return self.__num_nodos
 
+    #Actualizacion de implementacion de metodos
+    
+    #verificacion si el arbol esta vacío
+    def esta_vacio(self):
+        return self.__raiz is None
+    
+    #verificacion si es hoja
+    def es_hoja(self, nodo):
+        return nodo.get_hijo_izquierdo() is None and nodo.get_hijo_derecho() is None
+    
+    #Metodo para recorrer en pre_orden
+    def pre_orden(self):
+        self.__pre_orden_rec(self.__raiz)
+        print()
 
+    def __pre_orden_rec(self, nodo):
+        if nodo:
+            print(nodo.get_data(), end=" ")
+            self.__pre_orden_rec(nodo.get_hijo_izquierdo())
+            self.__pre_orden_rec(nodo.get_hijo_derecho())
+    
+    #Metodo para recorrer en post orden
+    def post_orden(self):
+        self.__post_orden_rec(self.__raiz)
+        print()
 
+    def __post_orden_rec(self, nodo):
+        if nodo:
+            self.__post_orden_rec(nodo.get_hijo_izquierdo())
+            self.__post_orden_rec(nodo.get_hijo_derecho())
+            print(nodo.get_data(), end=" ")
