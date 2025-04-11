@@ -1,13 +1,14 @@
 """
 Title: Implementar el ADT Arboles Binarios
 Autor: Axel Jes Aguilar Ribera
-Date: 08/04/25
-Version: v2.0
+Date: 10/04/25
+Version: v3.0
 """
 """
 creacion de clase ArbolBinario
 """
 from Nodo import Nodo
+from collections import deque
 class ArbolBinarioBusqueda:
     def __init__(self):
         """Inicializa el árbol binario de búsqueda vacío."""
@@ -118,3 +119,62 @@ class ArbolBinarioBusqueda:
             self.__post_orden_rec(nodo.get_hijo_izquierdo())
             self.__post_orden_rec(nodo.get_hijo_derecho())
             print(nodo.get_data(), end=" ")
+
+    #implementacion de metodos DFS y BFS
+    # DFS Preorden
+    def dfs_preorden(self):
+        """Devuelve lista del recorrido en preorden (DFS)."""
+        resultado = []
+        self.__dfs_preorden_rec(self.__raiz, resultado)
+        return resultado
+
+    def __dfs_preorden_rec(self, nodo, resultado):
+        if nodo:
+            resultado.append(nodo.get_data())  # Nodo
+            self.__dfs_preorden_rec(nodo.get_hijo_izquierdo(), resultado)  # Izquierda
+            self.__dfs_preorden_rec(nodo.get_hijo_derecho(), resultado)  # Derecha
+
+    # DFS Inorden
+    def dfs_inorden(self):
+        """Devuelve lista del recorrido en inorden (DFS)."""
+        resultado = []
+        self.__dfs_inorden_rec(self.__raiz, resultado)
+        return resultado
+
+    def __dfs_inorden_rec(self, nodo, resultado):
+        if nodo:
+            self.__dfs_inorden_rec(nodo.get_hijo_izquierdo(), resultado)  # Izquierda
+            resultado.append(nodo.get_data())  # Nodo
+            self.__dfs_inorden_rec(nodo.get_hijo_derecho(), resultado)  # Derecha
+
+    # DFS Postorden
+    def dfs_postorden(self):
+        """Devuelve lista del recorrido en postorden (DFS)."""
+        resultado = []
+        self.__dfs_postorden_rec(self.__raiz, resultado)
+        return resultado
+
+    def __dfs_postorden_rec(self, nodo, resultado):
+        if nodo:
+            self.__dfs_postorden_rec(nodo.get_hijo_izquierdo(), resultado)  # Izquierda
+            self.__dfs_postorden_rec(nodo.get_hijo_derecho(), resultado)  # Derecha
+            resultado.append(nodo.get_data())  # Nodo
+                  
+    # Método para recorrido por niveles (BFS)
+    def recorrido_por_niveles(self):
+        """Realiza un recorrido por niveles (BFS) del ABB."""
+        if self.__raiz is None:
+            print("El árbol está vacío.")
+            return
+
+        cola = deque()
+        cola.append(self.__raiz)
+
+        while cola:
+            nodo_actual = cola.popleft()
+            print(nodo_actual.get_data(), end=" ")
+
+            if nodo_actual.get_hijo_izquierdo() is not None:
+                cola.append(nodo_actual.get_hijo_izquierdo())
+            if nodo_actual.get_hijo_derecho() is not None:
+                cola.append(nodo_actual.get_hijo_derecho())
