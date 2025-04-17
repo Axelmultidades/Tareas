@@ -1,8 +1,7 @@
 """
 Title: Implementar el ADT Arboles Binarios
 Autor: Axel Jes Aguilar Ribera
-Date: 03/04/25
-Version: v1.0
+Date: 17/04/25
 """
 """
 Principal utilizado para pruebas
@@ -22,21 +21,8 @@ abb.insertar(80)
 print("Recorrido en orden:")
 abb.in_orden()
 
-# Buscar valores en el árbol
-valores_a_buscar = [40, 90]
-for valor in valores_a_buscar:
-    if abb.buscar(valor):
-        print(f"El valor {valor} se encuentra en el árbol.")
-    else:
-        print(f"El valor {valor} no está en el árbol.")
+abb.eliminar(20)  
+abb.eliminar(30)  
+abb.eliminar(50)  
 
-# Encontrar valores mínimo y máximo
-print(f"Valor mínimo: {abb.minimo()}")
-print(f"Valor máximo: {abb.maximo()}")
-
-# Obtener la altura del árbol
-print(f"Altura del árbol: {abb.altura()}")
-
-# Contar nodos
-print(f"Número total de nodos: {abb.get_num_nodos()}")
-
+abb.in_orden()  # Verifica el resultado después de eliminar

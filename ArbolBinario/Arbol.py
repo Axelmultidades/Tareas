@@ -1,8 +1,8 @@
 """
 Title: Implementar el ADT Arboles Binarios
 Autor: Axel Jes Aguilar Ribera
-Date: 10/04/25
-Version: v3.0
+Date: 17/04/25
+Version 4.0
 """
 """
 creacion de clase ArbolBinario
@@ -178,3 +178,48 @@ class ArbolBinarioBusqueda:
                 cola.append(nodo_actual.get_hijo_izquierdo())
             if nodo_actual.get_hijo_derecho() is not None:
                 cola.append(nodo_actual.get_hijo_derecho())
+
+    #Metodos de eliminacion 
+    def eliminar(self, data):
+        """Elimina un nodo con el valor especificado del ABB."""
+        self.__raiz, eliminado = self.__eliminar_rec(self.__raiz, data)
+        if eliminado:
+            self.__num_nodos -= 1
+    
+    def __eliminar_rec(self, nodo, data):
+        if nodo is None:
+            return nodo, False
+
+        if data < nodo.get_data():
+            nodo_izq, eliminado = self.__eliminar_rec(nodo.get_hijo_izquierdo(), data)
+            nodo.set_hijo_izquierdo(nodo_izq)
+            return nodo, eliminado
+
+        elif data > nodo.get_data():
+            nodo_der, eliminado = self.__eliminar_rec(nodo.get_hijo_derecho(), data)
+            nodo.set_hijo_derecho(nodo_der)
+            return nodo, eliminado
+        
+        else:
+        # Caso 1: nodo sin hijos (hoja)
+            if nodo.get_hijo_izquierdo() is None and nodo.get_hijo_derecho() is None:
+                return None, True
+
+         # Caso 2: nodo con un solo hijo    
+            if nodo.get_hijo_izquierdo() is None:
+                return nodo.get_hijo_derecho(), True
+            if nodo.get_hijo_derecho() is None:
+                return nodo.get_hijo_izquierdo(), True
+            
+        # Caso 3: nodo con dos hijos
+            sucesor = self.__encontrar_min(nodo.get_hijo_derecho())
+            nodo.set_data(sucesor.get_data())
+            nuevo_derecho, eliminado = self.__eliminar_rec(nodo.get_hijo_derecho(), sucesor.get_data())
+            nodo.set_hijo_derecho(nuevo_derecho)
+            return nodo, True
+    
+    def __encontrar_min(self, nodo):
+        """Encuentra el nodo con el valor mínimo en el subárbol dado."""
+        while nodo.get_hijo_izquierdo() is not None:
+            nodo = nodo.get_hijo_izquierdo()
+        return nodo
